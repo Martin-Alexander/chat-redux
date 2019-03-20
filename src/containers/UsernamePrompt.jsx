@@ -20,13 +20,24 @@ class UsernamePrompt extends React.Component {
   }
 
   render() {
+    const display = this.props.username === null ? "initial" : "none";
+
     return(
-      <div>
-        <input onChange={this.handleChange.bind(this)} type="text" value={this.state.usernameText}/>
+      <div style={{ display: display }}>
+        <input
+          placeholder="enter username"
+          onChange={this.handleChange.bind(this)}
+          type="text"
+          value={this.state.usernameText}
+        />
         <button onClick={this.handleClick.bind(this)}>Submit</button>
       </div>
-    )
+    );
   }
+}
+
+function matchStateToProps(state) {
+  return({ username: state.username });
 }
 
 function matchDispatchToProps(dispatch) {
@@ -36,4 +47,4 @@ function matchDispatchToProps(dispatch) {
   );
 }
 
-export default connect(null, matchDispatchToProps)(UsernamePrompt);
+export default connect(matchStateToProps, matchDispatchToProps)(UsernamePrompt);

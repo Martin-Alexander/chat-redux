@@ -1,18 +1,39 @@
 import React from "react";
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+
+import { getMessages } from "../actions/index";
 
 import Channel from "./Channel";
 
 class ChannelList extends React.Component {
+  componentWillMount() {
+    this.props.getMessages(this.props.selectedChannel);
+    setInterval(() => {
+      this.props.getMessages(this.props.selectedChannel)
+    }, 1000);
+  }
+
   render() {
-    <div>
-      {this.props.channels.map(channel => <Channel key={channel.id} data={channel}/>)}
-    </div>
+    return(
+      <div>
+        <Channel name="test"/>
+        <Channel name="general"/>
+        <Channel name="other"/>
+      </div>
+    );
   }
 }
 
 function matchStateToProps(state) {
-  return({ channels: state.channel });
+  return ({ selectedChannel: state.selectedChannel });
 }
 
-export default connect(matchStateToProps, null)(ChannelList)
+function matchDispatchToProps(dispatch) {
+  return bindActionCreators(
+    { getMessages: getMessages },
+    dispatch
+  )
+}
+
+export default connect(matchStateToProps, matchDispatchToProps)(ChannelList)

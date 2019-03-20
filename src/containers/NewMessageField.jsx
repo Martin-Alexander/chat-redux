@@ -16,17 +16,33 @@ class NewMessageField extends React.Component {
   }
 
   handleClick() {
-    this.props.sendMessage(this.state.messageText);
+    this.props.sendMessage(
+      this.state.messageText,
+      this.props.username,
+      this.props.selectedChannel
+    );
   }
 
   render() {
     return(
       <div>
-        <input onChange={this.handleChange.bind(this)} type="text" value={this.state.messageText} />
+        <input
+          placeholder="enter message"
+          onChange={this.handleChange.bind(this)}
+          type="text"
+          value={this.state.messageText}
+        />
         <button onClick={this.handleClick.bind(this)}>Submit</button>
       </div>
     );
   }
+}
+
+function matchStateToProps(state) {
+  return({
+    username: state.username,
+    selectedChannel: state.selectedChannel
+  });
 }
 
 function matchDispatchToProps(dispatch) {
@@ -36,4 +52,4 @@ function matchDispatchToProps(dispatch) {
   );
 }
 
-export default connect(null, matchDispatchToProps)(NewMessageField);
+export default connect(matchStateToProps, matchDispatchToProps)(NewMessageField);

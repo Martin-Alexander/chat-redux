@@ -3,23 +3,23 @@ import React from "react";
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import { setSelectedChannel } from "../actions/index";
+import { setChannel } from "../actions/index";
 
 class Channel extends React.Component {
   handleClick() {
-    this.props.setSelectedChannel(this.props.data.name)
+    this.props.setChannel(this.props.name)
   }
 
   render() {
     return(
-      <div onClick={this.handleClick.bind(this)} >{this.props.data.name}</div>
+      <div onClick={this.handleClick.bind(this)} >{this.props.name}</div>
     )
   }
 }
 
 function matchDispatchToProps(dispatch) {
   return bindActionCreators(
-    { setSelectedChannel: setSelectedChannel },
+    { setChannel: setChannel },
     dispatch
   );
 }
